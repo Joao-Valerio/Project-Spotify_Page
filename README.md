@@ -26,3 +26,16 @@ Barra lateral com menu de navegação
 Player de música (visual apenas)
 
 Integração de fontes e ícones personalizados
+
+📦 Como Executar o Projeto
+# Clone o repositório
+git clone https://github.com/seu-usuario/spotify-page-clone.git
+
+# Acesse o diretório do projeto
+cd spotify-page-clone
+
+# Instale as dependências
+npm install
+
+# Inicie o projeto
+npm run dev
