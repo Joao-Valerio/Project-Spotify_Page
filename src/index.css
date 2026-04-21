@@ -385,6 +385,12 @@ img {
   overflow: hidden;
 }
 
+.song__artist-image--placeholder {
+  width: 75px;
+  height: 75px;
+  background-color: var(--green-900);
+}
+
 .song__name {
   font-size: 19px;
   font-weight: 700;
@@ -439,6 +445,15 @@ img {
   font-size: 25px;
   align-items: center;
   gap: 20px;
+}
+
+.player__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 0;
+  color: inherit;
 }
 
 .player__icon {

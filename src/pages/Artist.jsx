@@ -1,26 +1,28 @@
-import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlay } from "@fortawesome/free-solid-svg-icons";
 import { Link, useParams } from "react-router-dom";
-import SongList from "../components/SongList";
+import SongList from "../Components/SongList";
 import { artistArray } from "../assets/database/artists";
 import { songsArray } from "../assets/database/songs";
 
 const Artist = () => {
     const { id } = useParams();
 
-    const { name, banner } = artistArray.filter(
+    const artist = artistArray.find(
         (currentArtistObj) => currentArtistObj.id === Number(id)
-    )[0];
+    );
+
+    if (!artist) {
+        return <div className="artist__body">Artista não encontrado.</div>;
+    }
+
+    const { name, banner } = artist;
 
     const songsArrayFromArtist = songsArray.filter(
         (currentSongObj) => currentSongObj.artist === name
     );
 
-    const randomIndex = Math.floor(
-        Math.random() * (songsArrayFromArtist.length - 1)
-    );
-    const randomIdFromArtist = songsArrayFromArtist[randomIndex].id;
+    const firstSongId = songsArrayFromArtist[0]?.id;
 
     return (
         <div className="artist">
@@ -39,12 +41,14 @@ const Artist = () => {
                 <SongList songsArray={songsArrayFromArtist} />
             </div>
 
-            <Link to={`/song/${randomIdFromArtist}`}>
-                <FontAwesomeIcon
-                    className="single-item__icon single-item__icon--artist"
-                    icon={faCirclePlay}
-                />
-            </Link>
+            {firstSongId ? (
+                <Link to={`/song/${firstSongId}`} state={{ autoPlay: true }}>
+                    <FontAwesomeIcon
+                        className="single-item__icon single-item__icon--artist"
+                        icon={faCirclePlay}
+                    />
+                </Link>
+            ) : null}
         </div>
     );
 };

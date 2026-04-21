@@ -1,26 +1,37 @@
-import React from "react";
 import SingleItem from "./SingleItem";
-import { Link,useLocation } from "react-router-dom";
+import PropTypes from "prop-types";
+import { Link, useLocation } from "react-router-dom";
 
 
 const ItemList = ({ title, items, itemsArray, path, idPath }) => {
-    const {pathname}= useLocation();
+    const { pathname } = useLocation();
 
-    const isHome = pathname ==="/";
+    const isHome = pathname === "/";
     const finalItems = isHome ? items : Infinity;
 
     return (
         <div className="item-list">
             <div className="item-list__header">
                 <h2>{title} populares</h2>
-                {isHome ? <Link className="item-list__link" to={path}>Mostrar tudo </Link> : <></>}
-                
+                {isHome ? <Link className="item-list__link" to={path}>Mostrar tudo </Link> : null}
             </div>
             <div className="item-list__container">
-                {itemsArray.filter((currentValue, index) => index < finalItems).map((currObj, index) => <SingleItem idPath={idPath}{...currObj} key={`${title}-${index}`} />)}
+                {itemsArray
+                    .slice(0, finalItems)
+                    .map((currObj, index) => (
+                        <SingleItem idPath={idPath} {...currObj} key={`${title}-${index}`} />
+                    ))}
             </div>
         </div>
     )
 }
+
+ItemList.propTypes = {
+    title: PropTypes.string.isRequired,
+    items: PropTypes.number.isRequired,
+    itemsArray: PropTypes.arrayOf(PropTypes.object).isRequired,
+    path: PropTypes.string.isRequired,
+    idPath: PropTypes.string.isRequired,
+};
 
 export default ItemList
